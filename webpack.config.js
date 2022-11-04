@@ -12,6 +12,7 @@ module.exports = {
 		port: 3000,
 		watchFiles: ["src/*.html"],
 		hot: true,
+		historyApiFallback: true
 	},
 	module: {
 		rules: [
