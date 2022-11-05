@@ -26,7 +26,7 @@ import {
 	FakeEmails,
 	FakeFirstNames,
 	FakeLastNames,
-} from "../Data.js";
+} from "../../Data.js";
 
 const JobTitles = [
 	"Software Developer",
@@ -240,7 +240,7 @@ class Form extends Component {
 
 			setTimeout(() => {
 				this.setState({ isLoading: false });
-				this.props.useNavigate("/contact-us");
+				this.props.useNavigate("/daily-task-4/contact-us");
 			}, 3000);
 		}
 	};

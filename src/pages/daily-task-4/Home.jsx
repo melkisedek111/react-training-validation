@@ -1,7 +1,6 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
-import Axios from "axios";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import React, { Component } from "react";
-import Poster from "../components/Poster.jsx";
+import Poster from "../../components/daily-task-4/Poster.jsx";
 
 class Home extends Component {
 	constructor(props) {
@@ -21,13 +20,23 @@ class Home extends Component {
 
 	render() {
 		return (
-			<Container maxWidth="lg" style={{ marginTop: "20px", marginBottom: "20px" }}>
+			<Container
+				maxWidth="lg"
+				style={{ marginTop: "20px", marginBottom: "20px" }}
+			>
 				<Box>
 					<Typography variant="h4">Movie Lists</Typography>
 
 					<Divider style={{ margin: "20px 0" }} />
 				</Box>
-				<Box sx={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "space-between" }}>
+				<Box
+					sx={{
+						display: "flex",
+						flexWrap: "wrap",
+						gap: 5,
+						justifyContent: "space-between",
+					}}
+				>
 					{this.state.movies &&
 						this.state.movies.map((movie, index) => (
 							<Poster

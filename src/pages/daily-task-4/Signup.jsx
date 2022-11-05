@@ -1,6 +1,6 @@
 import { Box, Container, Divider, Typography } from "@mui/material";
 import React, { Component } from "react";
-import Form from "../components/Form.jsx";
+import Form from "../../components/daily-task-4/Form.jsx";
 
 class Signup extends Component {
 	constructor(props) {

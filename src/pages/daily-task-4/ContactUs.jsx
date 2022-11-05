@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ContactCard from "./ContactCard.jsx";
+import ContactCard from "../../components/daily-task-4/ContactCard.jsx";
 
 class ContactUs extends Component {
 	constructor(props) {
@@ -67,7 +67,7 @@ class ContactUs extends Component {
 						</Grid>
 					</Box>
                     <Box style={{margin: "50px 0"}}>
-                        <Typography variant="subtitle1">Please go to <Link to="/signup">Signup Page</Link> to create an account.</Typography>
+                        <Typography variant="subtitle1">Please go to <Link to="/daily-task-4/signup">Signup Page</Link> to create an account.</Typography>
                     </Box>
 					{this.props.isSignupSuccess ? (
 						<Snackbar

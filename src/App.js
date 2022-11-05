@@ -1,30 +1,30 @@
-import React, { Component } from "react";
-import { Box, Divider, Grid, TextField, Typography } from "@mui/material";
-import Axios from "axios";
-
+import React, { useState } from "react";
 import Navbar from "./components/Navbar.jsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+import Home from "./pages/daily-task-4/Home.jsx";
+import { Outlet, Route, Routes } from "react-router-dom";
+import GoogleMap from "./pages/daily-task-4/GoogleMap.jsx";
+import ContactUs from "./pages/daily-task-4/ContactUs.jsx";
+import Signup from "./pages/daily-task-4/Signup.jsx";
+import AboutUs from "./pages/daily-task-4/AboutUs.jsx";
+import Main from "./pages/Main.jsx";
+import DailyTaskFiveHome from "./pages/daily-task-5/DailyTaskFiveHome.jsx";
+import HooksPage from "./pages/daily-task-5/HooksPage.jsx";
+import FunctionalComponentPage from "./pages/daily-task-5/FunctionalComponentPage.jsx";
+
 import "./App.css";
-import Home from "./pages/Home.jsx";
-import { Route, Routes } from "react-router-dom";
-import GoogleMap from "./pages/GoogleMap.jsx";
-import ContactUs from "./components/ContactUs.jsx";
-import Signup from "./pages/Signup.jsx";
-import AboutUs from "./pages/AboutUs.jsx";
+import LodashPage from "./pages/daily-task-5/LodashPage.jsx";
+
 const theme = createTheme({
 	typography: {
-		fontFamily: ["Poppins"].join(","),
+		fontFamily: ["Poppins", "Fira Code"].join(","),
 	},
 });
-class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			users: [],
-			isSignupSuccess: false,
-		};
-	}
+const App = () => {
+	const [users, setUsers] = useState([]);
+	const [isSignupSuccess, setIsSignupSuccess] = useState(false);
+
 	/**
 	 * DOCUMENT: This function is used to add new user. <br>
 	 * Triggered: when submitting a form <br>
@@ -34,11 +34,9 @@ class App extends Component {
 	 * @param {object} user - {fullName,dateOfBirth,emailAddress,contactNumber,aboutMyself}.
 	 * @author Mel
 	 */
-	handleNewUser = (user) => {
-		this.setState((prevState) => ({
-			users: [...prevState.users, user],
-			isSignupSuccess: true,
-		}));
+	const handleNewUser = (user) => {
+		setUsers([...users, user]);
+		setIsSignupSuccess(true);
 	};
 
 	/**
@@ -50,38 +48,98 @@ class App extends Component {
 	 * @param {}  - {}.
 	 * @author Mel
 	 */
-	handleSignupSuccess = () => {
-		this.setState({ isSignupSuccess: false });
+	const handleSignupSuccess = () => {
+		setIsSignupSuccess(false);
 	};
 
-	render() {
-		return (
-			<ThemeProvider theme={theme}>
-				<div>
-					<Navbar />
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route
-							path="/contact-us"
-							element={
-								<ContactUs
-									users={this.state.users}
-									isSignupSuccess={this.state.isSignupSuccess}
-									handleSignupSuccess={this.handleSignupSuccess}
-								/>
-							}
-						/>
-						<Route
-							path="/signup"
-							element={<Signup handleNewUser={this.handleNewUser} />}
-						/>
-						<Route path="/google-map" element={<GoogleMap />} />
-						<Route path="/about-us" element={<AboutUs />} />
-					</Routes>
-				</div>
-			</ThemeProvider>
-		);
-	}
-}
+	const links = [
+		{
+			path: "/daily-task-4",
+			task: "Daily Task 4",
+			Component: Home,
+			label: "Home",
+			subPaths: [
+				{
+					path: "/contact-us",
+					Component: ContactUs,
+					label: "Contact Us",
+					props: { users, isSignupSuccess, handleSignupSuccess },
+				},
+				{
+					path: "/signup",
+					Component: Signup,
+					props: { handleNewUser },
+					label: "Sign Up",
+				},
+				{
+					path: "/google-map",
+					Component: GoogleMap,
+					props: {},
+					label: "Google Map",
+				},
+				{
+					path: "/about-us",
+					Component: AboutUs,
+					props: {},
+					label: "About Us",
+				},
+			],
+		},
+		{
+			path: "/daily-task-5",
+			task: "Daily Task 5",
+			props: {},
+			Component: DailyTaskFiveHome,
+			label: "Daily Task 5 (Home)",
+			subPaths: [
+				{
+					path: "/hooks-practice",
+					Component: HooksPage,
+					label: "Hooks Practice",
+					props: { },
+				},
+				{
+					path: "/functional-component",
+					Component: FunctionalComponentPage,
+					label: "Functional Component",
+					props: { },
+				},
+				{
+					path: "/lodash",
+					Component: LodashPage,
+					label: "Lodash",
+					props: { },
+				},
+			],
+		},
+	];
+	console.log({users})
+	return (
+		<ThemeProvider theme={theme}>
+			<div>
+				<Navbar links={links} />
+				<Routes>
+					<Route path="/" element={<Main links={links} />} />
+					{links.map(
+						({ path: mainPath, Component: MainComponent, subPaths }, index) => (
+							<Route key={index} path={mainPath} element={<Outlet />}>
+								<Route path={mainPath} element={<MainComponent />} />
+								{subPaths.map(({ path, Component, props }, index_a) => {
+									return (
+										<Route
+											key={index_a}
+											path={mainPath + path}
+											element={<Component {...props} />}
+										/>
+									);
+								})}
+							</Route>
+						)
+					)}
+				</Routes>
+			</div>
+		</ThemeProvider>
+	);
+};
 
 export default App;

@@ -13,35 +13,23 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const pages = [
-	{
-		link: "/",
-		label: "Home",
-	},
-	{
-		link: "/contact-us",
-		label: "Contact Us",
-	},
-	{
-		link: "/about-us",
-		label: "About Us",
-	},
-	{
-		link: "/signup",
-		label: "Sign Up",
-	},
-	{
-		link: "/google-map",
-		label: "Google Map",
-	},
-];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ links }) {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
+	const location = useLocation();
+	const selectedPaths = links.find((link) => {
+		return location.pathname.includes(link.path);
+	});
+	let paths = [];
+	let mainPath = "";
 
+	if (selectedPaths) {
+		const { subPaths, path, label } = selectedPaths;
+		mainPath = path;
+		paths = [{ path: "", label }, ...subPaths];
+	}
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
 	};
@@ -62,26 +50,23 @@ function ResponsiveAppBar() {
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-
-					<Typography
-						variant="h6"
-						noWrap
-						component="a"
-						sx={{
-							mr: 2,
-							display: { xs: "none", md: "flex" },
-							fontFamily: "monospace",
-							fontWeight: 700,
-							letterSpacing: ".3rem",
-							color: "inherit",
-							textDecoration: "none",
-						}}
-					>
-						<Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+					<Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+						<Typography
+							variant="h6"
+							noWrap
+							sx={{
+								mr: 2,
+								display: { xs: "none", md: "flex" },
+								fontFamily: "monospace",
+								fontWeight: 700,
+								letterSpacing: ".3rem",
+								color: "inherit",
+								textDecoration: "none",
+							}}
+						>
 							RANDOMLY
-						</Link>
-					</Typography>
-
+						</Typography>
+					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 						<IconButton
 							size="large"
@@ -111,10 +96,10 @@ function ResponsiveAppBar() {
 								display: { xs: "block", md: "none" },
 							}}
 						>
-							{pages.map((page) => (
-								<Link to={page.link}>
-									<MenuItem key={page.label} onClick={handleCloseNavMenu}>
-										<Typography textAlign="center">{page.label}</Typography>
+							{paths.map((path) => (
+								<Link key={path.label} to={mainPath + path.path}>
+									<MenuItem onClick={handleCloseNavMenu}>
+										<Typography textAlign="center">{path.label}</Typography>
 									</MenuItem>
 								</Link>
 							))}
@@ -140,50 +125,28 @@ function ResponsiveAppBar() {
 						LOGO
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						{pages.map((page) => (
-							<Link to={page.link} style={{ textDecoration: "none" }}>
+						{paths.map((path) => (
+							<Link
+								to={mainPath + path.path}
+								style={{ textDecoration: "none" }}
+								key={path.label}
+							>
 								<Button
-									key={page.label}
 									onClick={handleCloseNavMenu}
 									sx={{ my: 2, color: "white", display: "block" }}
 								>
-									{page.label}
+									{path.label}
 								</Button>
 							</Link>
 						))}
 					</Box>
 
 					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title="Open settings">
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar
-									alt="Remy Sharp"
-									src={`https://robohash.org/${Math.random()}`}
-								/>
-							</IconButton>
-						</Tooltip>
-						<Menu
-							sx={{ mt: "45px" }}
-							id="menu-appbar"
-							anchorEl={anchorElUser}
-							anchorOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: "top",
-								horizontal: "right",
-							}}
-							open={Boolean(anchorElUser)}
-							onClose={handleCloseUserMenu}
-						>
-							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
-									<Typography textAlign="center">{setting}</Typography>
-								</MenuItem>
-							))}
-						</Menu>
+						<Link to="/" style={{ textDecoration: "none" }}>
+							<Button color="warning" variant="contained">
+								Home
+							</Button>
+						</Link>
 					</Box>
 				</Toolbar>
 			</Container>
