@@ -168,8 +168,9 @@ const LodashComponent = () => {
 				}}
 			>
 				{!searchKeyword.trim()
-					? dummyData.map((user) => (
+					? dummyData.map((user, index) => (
 							<ContactCard
+                                key={index}
 								firstName={user.firstName}
 								lastName={user.lastName}
 								dateOfBirth={user.dateOfBirth}
@@ -182,8 +183,9 @@ const LodashComponent = () => {
 							/>
 					  ))
 					: null}
-				{filteredData.map((user) => (
+				{filteredData.map((user, index) => (
 					<ContactCard
+                        key={index}
 						firstName={user.firstName}
 						lastName={user.lastName}
 						dateOfBirth={user.dateOfBirth}
