@@ -49,7 +49,7 @@ function ResponsiveAppBar({ links }) {
 		<AppBar position="static" style={{ backgroundColor: "#22215b" }}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+					<Avatar src="https://cdn-icons-png.flaticon.com/512/1183/1183672.png" sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
 					<Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
 						<Typography
 							variant="h6"
@@ -64,7 +64,7 @@ function ResponsiveAppBar({ links }) {
 								textDecoration: "none",
 							}}
 						>
-							RANDOMLY
+							REACT-TRAINING
 						</Typography>
 					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
