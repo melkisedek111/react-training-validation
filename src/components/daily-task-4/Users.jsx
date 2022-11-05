@@ -26,10 +26,10 @@ class Users extends Component {
     /**
     * DOCUMENT: This function is used to add new user. <br>
     * Triggered: when submitting a form <br>
-    * Last Updated Date: November 3, 2022
+    * Last Updated Date: November 4, 2022
     * @function
     * @memberOf Users
-    * @param {object} user - {fullName,dateOfBirth,emailAddress,contactNumber,aboutMyself}.
+    * @param {object} user - {firstName, lastName,emailAddress,contactNumber,aboutMyself, level, jobTItle}.
     * @author Mel
     */
 	handleNewUser = (user) => {

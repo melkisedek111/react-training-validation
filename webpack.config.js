@@ -12,6 +12,7 @@ module.exports = {
 		port: 3000,
 		watchFiles: ["src/*.html"],
 		hot: true,
+		historyApiFallback: true
 	},
 	module: {
 		rules: [
@@ -20,6 +21,9 @@ module.exports = {
 				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader",
+					options: {
+						presets: ["@babel/preset-env"]
+					}
 				},
 			},
 			{
